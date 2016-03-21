@@ -5,15 +5,19 @@
     
     <title>Victor Augusto</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description">
+    <meta name="description" content="AboutHey you! :D
+I am the kind of developer who loves the job. There is nothing better than being part of a solution for someone’s problem. I like to always be discussing better ways to develop ideas">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Victor Augusto">
-<meta property="og:url" content="http://augustovictor.com/index.html">
+<meta property="og:url" content="http://augustovictor.com/about/index.html">
 <meta property="og:site_name" content="Victor Augusto">
-<meta property="og:description">
+<meta property="og:description" content="AboutHey you! :D
+I am the kind of developer who loves the job. There is nothing better than being part of a solution for someone’s problem. I like to always be discussing better ways to develop ideas">
+<meta property="og:updated_time" content="2016-03-21T03:07:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Victor Augusto">
-<meta name="twitter:description">
+<meta name="twitter:description" content="AboutHey you! :D
+I am the kind of developer who loves the job. There is nothing better than being part of a solution for someone’s problem. I like to always be discussing better ways to develop ideas">
     
 
     
@@ -132,74 +136,16 @@
 </aside>
 
             
-            <section id="main">
-    <article id="post-Create-and-deploy-posts-in-Hexo" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
         
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2016/03/19/Create-and-deploy-posts-in-Hexo/">Create and deploy posts in Hexo</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2016/03/19/Create-and-deploy-posts-in-Hexo/">
-            <time datetime="2016-03-19T16:07:48.000Z" itemprop="datePublished">2016-03-19</time>
-        </a>
-    </div>
-
-
-                    
-                    
-                </div>
-            </header>
-        
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>LinkedIn: <a href="https://br.linkedin.com/in/victor-augusto-bba81731" target="_blank" rel="external">Victor Augusto</a><br>Github: <a href="https://github.com/victoraweb" target="_blank" rel="external">victoraweb</a><br><strong> Remember to share if you liked it. </strong> :thumbsup:</p>
-<hr>
-
-<h2 id="Steps"><a href="#Steps" class="headerlink" title="Steps"></a>Steps</h2><ol>
-<li><a href="#Step-1-Create-a-new-post-file"><strong>Create a new post file</strong></a></li>
-<li><a href="#Step-2-Write-your-post"><strong>Write your post</strong></a></li>
-<li><a href="#Step-3-Generate-the-static-files"><strong>Generate the static files</strong></a></li>
-<li><a href="#Step-4-Publish-your-post-still-a-draft"><strong>Publish your post (still a draft)</strong></a></li>
-<li><a href="#Step-5-Preview-your-post-local"><strong>Preview your post (local)</strong></a></li>
-<li><a href="#Step-6-Deploy-of-your-post"><strong>Deploy of your post</strong></a></li>
-</ol>
-<hr>
-
-<h2 id="Step-1-Create-a-new-post-file"><a href="#Step-1-Create-a-new-post-file" class="headerlink" title="Step 1: Create a new post file"></a>Step 1: Create a new post file</h2><h6 id="Get-into-your-repo-folder"><a href="#Get-into-your-repo-folder" class="headerlink" title="Get into your repo folder"></a>Get into your repo folder</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd my-blog-folder</span><br></pre></td></tr></table></figure>
-<p>You should se a structure similar to this<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">_config.yml  db.json  node_modules package.json</span><br><span class="line">public   scaffolds    source       themes</span><br></pre></td></tr></table></figure></p>
-<h6 id="Create-your-post"><a href="#Create-your-post" class="headerlink" title="Create your post"></a>Create your post</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post &quot;Create and deploy posts in Hexo&quot;</span><br></pre></td></tr></table></figure>
-<hr>
-
-<h2 id="Step-2-Write-your-post"><a href="#Step-2-Write-your-post" class="headerlink" title="Step 2: Write your post"></a>Step 2: Write your post</h2><p>Open the <code>my-blog-folder/source/_posts/Create-and-deploy-posts-in-Hexo.md</code> and follow the reference to make use of the <a href="https://help.github.com/articles/basic-writing-and-formatting-syntax/" target="_blank" rel="external"><strong>Markdown  formatting syntax</strong></a> to add some flavor to your post.</p>
-<hr>
-
-<h2 id="Step-3-Generate-the-static-files"><a href="#Step-3-Generate-the-static-files" class="headerlink" title="Step 3: Generate the static files"></a>Step 3: Generate the static files</h2><p>It will generate your html pages. The <code>-w</code> parameter stands for <strong>watch</strong> so if you are writing and previewing your post it might be a good option since the static files will be updated automatically (local only). <strong>Remember that we are still in the root directory of our my-blog-folder</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo generate -w</span><br></pre></td></tr></table></figure></p>
-<p>However the <code>-w</code> can be ommited if you want to run this yourself.</p>
-<h2 id="Step-4-Publish-your-post-still-a-draft"><a href="#Step-4-Publish-your-post-still-a-draft" class="headerlink" title="Step 4: Publish your post (still a draft)"></a>Step 4: Publish your post (still a draft)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo publish</span><br></pre></td></tr></table></figure>
-<h2 id="Step-5-Preview-your-post-local"><a href="#Step-5-Preview-your-post-local" class="headerlink" title="Step 5: Preview your post (local)"></a>Step 5: Preview your post (local)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
-<p>You should get something like this in your command line:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INFO  Start processing</span><br><span class="line">INFO  Hexo is running at http://localhost:4000/. Press Ctrl+C to stop.</span><br></pre></td></tr></table></figure></p>
-<h2 id="Step-6-Deploy-of-your-post"><a href="#Step-6-Deploy-of-your-post" class="headerlink" title="Step 6: Deploy of your post"></a>Step 6: Deploy of your post</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
-<p><hr></p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="https://hexo.io/docs/" target="_blank" rel="external">Hexo</a><ol>
-<li><a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></li>
-<li><a href="https://hexo.io/docs/commands.html" target="_blank" rel="external">Commands</a></li>
-</ol>
-</li>
-<li><a href="https://help.github.com/articles/basic-writing-and-formatting-syntax/" target="_blank" rel="external">Markdown formatting syntax</a></li>
-</ol>
+            <h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><p>Hey you! :D</p>
+<p>I am the kind of developer who loves the job. There is nothing better than being part of a solution for someone’s problem. I like to always be discussing better ways to develop ideas or improve features in order to be part of a positive changing down the road. Communication and a good relations with coworkers are the keys for a well succeeded project.</p>
 
         
         </div>
@@ -210,7 +156,7 @@
 
 </div>
 
-    <a data-url="http://augustovictor.com/2016/03/19/Create-and-deploy-posts-in-Hexo/" data-id="cim13dql70001a7yoz0muzbi4" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://augustovictor.com/about/index.html" data-id="cim13dql40000a7yoacgvlek9" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -278,14 +224,28 @@
 
             
     
-        <a href="http://augustovictor.com/2016/03/19/Create-and-deploy-posts-in-Hexo/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://augustovictor.com/2016/03/19/Create-and-deploy-posts-in-Hexo/">Comments</a>
+        <a href="http://augustovictor.com/about/index.html#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://augustovictor.com/about/index.html">Comments</a>
     
 
         </footer>
     </div>
     
+        
+
+    
 </article>
 
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
 
 </section>
             
@@ -353,11 +313,13 @@
     var disqus_shortname = 'hexo-theme-icarus';
     
     
+    var disqus_url = 'http://augustovictor.com/about/index.html';
+    
     (function() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
     </script>
