@@ -101,18 +101,18 @@
         <div class="base-info profile-block">
             <img id="avatar" src="/css/images/avatar.png" />
             <h2 id="name">Victor Augusto</h2>
-            <h3 id="title">Full Stack Developer</h3>
+            <h3 id="title">Full Stack and Android Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Brazil</span>
             <a id="follow" target="_blank" href="https://github.com/augustovictor/">FOLLOW</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                3
+                4
                 <span>posts</span>
             </div>
             <div class="article-info-block">
-                1
-                <span>tag</span>
+                2
+                <span>tags</span>
             </div>
         </div>
         
@@ -133,6 +133,290 @@
 
             
             <section id="main">
+    <article id="post-Android-Content-Providers" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/10/08/Android-Content-Providers/">Android: Content Providers</a>
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/10/08/Android-Content-Providers/">
+            <time datetime="2016-10-08T09:27:58.000Z" itemprop="datePublished">2016-10-08</time>
+        </a>
+    </div>
+
+
+                    
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/android/">android</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            
+<ol>
+<li><a href="#definition">O que é um Content Provider</a></li>
+</ol>
+<ul>
+<li><a href="#why_use">Por que usar um Content Provider</a></li>
+<li><a href="#how_they_work">Como Content Providers funcionam</a><ol>
+<li>ContentResolver</li>
+</ol>
+<ul>
+<li>Uri</li>
+<li>Functions</li>
+<li>Cursor</li>
+</ul>
+</li>
+<li><a href="#implementing">Implementando um Content Provider</a><ol>
+<li>Contract</li>
+</ol>
+<ul>
+<li>Database Helper</li>
+<li>Provider</li>
+<li>CursorAdapter</li>
+<li>Loader</li>
+</ul>
+</li>
+</ul>
+<hr>
+
+<h2 id="1-O-que-e-um-Content-Provider"><a href="#1-O-que-e-um-Content-Provider" class="headerlink" title=" 1. O que é um Content Provider"></a><a name="definition"></a> 1. O que é um Content Provider</h2><p>Apps normalmente precisam de dados. As vezes <strong>SharedPreferences</strong> vai servir, caso você esteja armazenando poucos dados e que estes sejam bem simples (Como no exepmlo de armazenarmos a unidade em que a temperatura será exibida, Fahrenheit or Celsius). Se você precisa armazenar informações mais complexas, é necessária uma solução mais robusta.</p>
+<p>Uma abordagem um tanto simples é conectar sua aplicação a um banco de dados. O Android oferece suporte para criar um banco de dados <strong>SQLite</strong> na pasta privada do seu aplicativo.</p>
+<p>Uma restrição é que os dados em um database são privados e podem ser acessados somente pelo app que o criou. <strong>ContentProviders</strong> são a solução para esta questão. Este é uma classe localizada entre o app e o <strong>dataSource</strong> (neste caso o banco de dados e as classes que se comunicam diretamente com o database). Ao invés de se comunicar diretamente com o database pra lhe fornecer as 20 últimas rows ou inserir uma nova, por exemplo, você solicita ao <strong>contentProvider</strong> que execute esta tarefa. Então o <strong>contentProvider</strong> interage diretamente com o dataSource. Você pode estar se perguntando o motivo pelo qual você deveria utilizar um <strong>contentProvider</strong> e quais seriam as vantagens de usa-lo.</p>
+<hr>
+
+<h2 id="2-Por-que-usar-um-Content-Provider"><a href="#2-Por-que-usar-um-Content-Provider" class="headerlink" title=" 2. Por que usar um Content Provider"></a><a name="why_use"></a> 2. Por que usar um Content Provider</h2><p>Usamos <strong>contentProviders</strong> para compartilharmos dados de uma forma segura e eficiente entre uma aplicação e um banco de dados. Compartilhar dados de forma segura é bastante importante quando permitimos múltiplas aplicações acessarem o banco de dados da nossa aplicação. O contentProvider também permite que outros apps acessem um banco de dados sem saber como estes estão armazenados. Isto é bastante útil se os dados vêm de mais de uma fonte, ou se decidirmos por mudar a fonte de dados em algum momento.</p>
+<p>Conforme mudamos de uma <strong>AsyncTask</strong> para <strong>SyncAdapters</strong> e <strong>CursorLoaders</strong>, vemos que precisamos de um <strong>ContentProvider</strong> para realizar a comunicação entre eles. Além disso, se quisermos implementar widgets ou buscas no nosso app, precisaremos do <strong>ContentProvider</strong> para fornecer o acesso aos dados. Por enquanto estas necessidades não estão presentes nos apps que estamos desenvolvendo, mas <strong>contentProviders</strong> são uma best practice e o esforço de implementa-los irá valer a pena quando quando o app estiver em produção, e também é importante adquirir experiência com este conceito é bastante válido neste momento inicial.</p>
+<hr>
+
+<h2 id="3-Como-Content-Providers-funcionam"><a href="#3-Como-Content-Providers-funcionam" class="headerlink" title=" 3. Como Content Providers funcionam"></a><a name="how_they_work"></a> 3. Como Content Providers funcionam</h2><h3 id="3-1-Content-Resolver"><a href="#3-1-Content-Resolver" class="headerlink" title="3.1 Content Resolver"></a>3.1 Content Resolver</h3><p>URI significa Uniform Resource Identifier. </p>
+<p>A URI pode identificar e/ou localizar dados. Normalmente eles seguem a seguinte estrutura:<br><code>content://[content_authority]/[desired_data]</code></p>
+<p>Exemplo de uma <strong>URI</strong> usada pra retornar uma lista de palavras do <strong>contentProvider</strong> do dicionário de um usuário:<br><code>content://user_dictionary/words</code></p>
+<h3 id="3-2-Uri"><a href="#3-2-Uri" class="headerlink" title="3.2 Uri"></a>3.2 Uri</h3><p>Um <strong>contentProvider</strong> é um middleman entre a aplicação e o database. </p>
+<p>A aplicação acessa o <strong>contentProvider</strong> para ler ou armazenar dados. Este feito graças ao <strong>ContentResolver</strong>. Há vários ContentProviders nos aparelhos Android (contentProvider do alarme, calendário, e muitos outros). </p>
+<p>A comunicação entre as aplicações e um <strong>contentProvider</strong> é gerenciada por um <strong>ContentResolver</strong>. </p>
+<p>O <strong>ContentResolver</strong> procura por um <strong>ContentProvider</strong> na requisição feita pela sua aplicação, então verifica por qual <strong>ContentProvider</strong> sua aplicação está procurando. Este processamento é feito através de um <strong>URI</strong>;</p>
+<h3 id="3-3-Functions"><a href="#3-3-Functions" class="headerlink" title="3.3 Functions"></a>3.3 Functions</h3><p>Após conseguir acesso ao <strong>ContentResolver</strong>, podemos realizar chamadas no <strong>ContentProvider</strong> (update, delete, query, insert e bulkInsert).</p>
+<table>
+<thead>
+<tr>
+<th>Tipo da função</th>
+<th>Tipo do retorno</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>insert(...)</code></td>
+<td>Uri</td>
+<td>Onde podemos encontrar o dado inserido</td>
+</tr>
+<tr>
+<td><code>bulkInsert(...)</code></td>
+<td>int</td>
+<td>Quantas linhas foram inseridas</td>
+</tr>
+<tr>
+<td><code>update(...)</code></td>
+<td>int</td>
+<td>Quantas linhas foram atualizadas</td>
+</tr>
+<tr>
+<td><code>delete(...)</code></td>
+<td>int</td>
+<td>Quantas linhas foram removidas</td>
+</tr>
+<tr>
+<td><code>query(...)</code></td>
+<td>Cursor</td>
+<td>Nos permite iterar sobre as linhas de dados retornadas</td>
+</tr>
+</tbody>
+</table>
+<p>Antes de avançarmos vamos ver o que acontece quando chamamos estas funções.</p>
+<ul>
+<li><p>Primeiro chamamos o <strong>ContentResolver</strong> para encontrar um ContentProvider. </p>
+</li>
+<li><p>O <strong>ContentResolver</strong> envia a mesma requisição recebida para o <strong>ContentProvider</strong> adequado, que por sua vez retorna o <strong>ContentProvider</strong> para o nosso app.</p>
+</li>
+</ul>
+<p>Uma vez que temos o provider, chamamos nele uma das funções listadas acima. O <strong>ContentResolver</strong> envia a chamada para o <strong>ContentProvider</strong>, que então faz a chamada para o database.</p>
+<p>O database retorna o valor apropriado para o <strong>ContentProvider</strong>, que então passa para o <strong>ContentResolver</strong> e finalmente para a aplicação.</p>
+<h3 id="3-4-Cursor"><a href="#3-4-Cursor" class="headerlink" title="3.4 Cursor"></a>3.4 Cursor</h3><p>Um <strong>Cursor</strong> é um iterator. Isso nos dá acesso aos dados de forma tabular. </p>
+<p>As operações que podemos executar no nosso cursor incluem: </p>
+<ul>
+<li>Acessar colunas dos dados retornados;</li>
+<li>A quantidade de linhas retornadas;</li>
+<li>Iterar sobre o cursor;</li>
+<li>E mais…</li>
+</ul>
+<p>Há muitas operações que podem ser executadas sobre um cursor, e elas podem ser verificadas na documentação do Android.</p>
+<table>
+<thead>
+<tr>
+<th>_ID</th>
+<th>version_name</th>
+<th>description</th>
+<th>icon</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Cupcake</td>
+<td>cupcake is the first android release</td>
+<td>2130837563</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Donut</td>
+<td>Donut description</td>
+<td>2130837564</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Eclair</td>
+<td>Eclair description</td>
+<td>2130837565</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Froyo</td>
+<td>Froyo description</td>
+<td>2130837566</td>
+</tr>
+<tr>
+<td>5</td>
+<td>GingerBread</td>
+<td>GingerBread description</td>
+<td>2130837567</td>
+</tr>
+</tbody>
+</table>
+<hr>
+
+
+<h2 id="4-Implementando-um-Content-Provider"><a href="#4-Implementando-um-Content-Provider" class="headerlink" title=" 4. Implementando um Content Provider"></a><a name="implementing"></a> 4. Implementando um Content Provider</h2><h3 id="4-1-Contract"><a href="#4-1-Contract" class="headerlink" title="4.1 Contract"></a>4.1 Contract</h3><p>Para implementar nosso <strong>contentProvider</strong> precisamos começar criando um <strong>Contract</strong>. Nele nós declaramos o <strong>contentAuthority</strong> e o <strong>baseURI</strong> para o banco de dados.</p>
+<p>Nele também definimos o nome da tabela e as respectivas colunas.</p>
+<p>Por fim declaramos o <strong>URI</strong> especificando a localização da tabela, assim como as <strong>URIs</strong> para acessar o diretório de dados <code>CURSOR_DIR_BASE_TYPE</code> (0 ou muitas linhas) e única linha <code>CURSOR_ITEM_BASE_TYPE</code>.</p>
+<h3 id="4-2-Database-Helper"><a href="#4-2-Database-Helper" class="headerlink" title="4.2 Database Helper"></a>4.2 Database Helper</h3><p>Aqui é onde de fato criamos uma tabela no banco de dados. E também mantemos o número da versão atual do nosso banco.</p>
+<p>Saber a versão do nosso banco de dados ajuda a gerencia-lo, uma vez que precisamos atualiza-lo quando houver alguma alteração.</p>
+<h3 id="4-3-Provider"><a href="#4-3-Provider" class="headerlink" title="4.3 Provider"></a>4.3 Provider</h3><p>Agora é a hora do <strong>provider</strong> de fato. A classe do <strong>provider</strong> deve estender de <code>ContentProvider</code>.</p>
+<p>Implementar esta classe requer um <code>@override</code> das funções do <code>ContentProvider</code> que discutimos anteriormente. Além disso também iremos fazer <code>@override</code> na função <code>getType()</code>, que nos permite saber o tipo do conteúdo (<code>DIR</code> ou <code>ITEM</code>) baseado no <strong>URI</strong>.</p>
+<p>Também temos que implementar um método que cria a <code>UriMatcher</code>, que nos permite determinar que tipo de requisição está sendo feita, baseado no <strong>URI</strong> enviado ao <strong>contentProvider</strong>. Ao usar o <code>matcher</code> podemos fazer as chamadas apropriadas ao database.</p>
+<h3 id="4-4-Cursor-Adapter"><a href="#4-4-Cursor-Adapter" class="headerlink" title="4.4 Cursor Adapter"></a>4.4 Cursor Adapter</h3><p>No caso desta aplicação, queremos mostrar os dados do <strong>contentProvider</strong> em um <code>GridView</code> e aplicar um <code>loader</code> a ele. Isso significa que precisamos de um <strong>CursorAdapter</strong>, uma vez que nosso <code>provider</code> retorna um <code>Cursor</code> quando selecionamos dados no banco.</p>
+<p>Estender do <code>CursorAdapter</code> requer um <code>@override</code> nos métodos:</p>
+<ul>
+<li><code>newView()</code> - Chamado quando definimos o cursor para o adapter, que irá criar a view que iremos exibir os dados.</li>
+<li><code>bindView()</code> - Chamada para cada linha do cursor para continuar a atualizar a view (item) a ser exibida.</li>
+</ul>
+<h3 id="4-5-Loader"><a href="#4-5-Loader" class="headerlink" title="4.5 Loader"></a>4.5 Loader</h3><p>Por fim, se quisermos que o <code>loader</code> seja exibido, devemos implementar o <code>LoaderManager</code> e anexa-lo ao <code>Cursor</code>.</p>
+<p>Assim teremos o <code>loader</code> em execução até que os dados sejam retornados para o <code>cursor</code> e estejam prontos para serem exibidos.</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://augustovictor.com/2016/10/08/Android-Content-Providers/" data-id="ciu104m8v0000wfyopplp25jr" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://augustovictor.com/2016/10/08/Android-Content-Providers/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://augustovictor.com/2016/10/08/Android-Content-Providers/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-Junit-Guide" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -454,7 +738,7 @@
 
 </div>
 
-    <a data-url="http://augustovictor.com/2016/09/30/Junit-Guide/" data-id="citq6on2100026qyovjw1n5f1" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://augustovictor.com/2016/09/30/Junit-Guide/" data-id="ciu104m9c0004wfyou3e9e8uo" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -585,7 +869,7 @@
 
 </div>
 
-    <a data-url="http://augustovictor.com/2016/03/26/Make-atom-brackets-highlight-like-Brackets-editor/" data-id="citq6on2500036qyoq81env63" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://augustovictor.com/2016/03/26/Make-atom-brackets-highlight-like-Brackets-editor/" data-id="ciu104m9e0005wfyot8tgqdks" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -737,7 +1021,7 @@
 
 </div>
 
-    <a data-url="http://augustovictor.com/2016/03/19/Create-and-deploy-posts-in-Hexo/" data-id="citq6on1t00006qyo2rswb0gh" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://augustovictor.com/2016/03/19/Create-and-deploy-posts-in-Hexo/" data-id="ciu104m940002wfyozitv01sx" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -827,6 +1111,24 @@
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2016/10/08/Android-Content-Providers/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/10/08/Android-Content-Providers/" class="title">Android: Content Providers</a></p>
+                            <p class="item-date"><time datetime="2016-10-08T09:27:58.000Z" itemprop="datePublished">2016-10-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2016/09/30/Junit-Guide/" class="thumbnail">
     
     
@@ -889,7 +1191,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -898,7 +1200,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/atom-editor/">atom, editor</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/atom-editor/">atom, editor</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -907,7 +1209,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
-            <a href="/tags/atom-editor/" style="font-size: 10px;">atom, editor</a>
+            <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/atom-editor/" style="font-size: 10px;">atom, editor</a>
         </div>
     </div>
 

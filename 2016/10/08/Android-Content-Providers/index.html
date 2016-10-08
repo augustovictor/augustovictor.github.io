@@ -3,32 +3,69 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Make atom brackets highlight like Brackets editor | Victor Augusto</title>
+    <title>Android: Content Providers | Victor Augusto</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Now it is possibleInstall the package atom-like-brackets-editor
+    <meta name="description" content="O que é um Content Provider
 
-[x] Matching brackets like brackets editor;
-[x] Highlight current line;
-[x] Pointer cursor on tree-view file hover;">
+
+Por que usar um Content Provider
+Como Content Providers funcionam
+ContentResolver
+
+
+Uri
+Functions
+Cursor
+
+
+Implementando um Content Provider
+Contract
+
+
+Database Helper">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Make atom brackets highlight like Brackets editor">
-<meta property="og:url" content="http://augustovictor.com/2016/03/26/Make-atom-brackets-highlight-like-Brackets-editor/index.html">
+<meta property="og:title" content="Android: Content Providers">
+<meta property="og:url" content="http://augustovictor.com/2016/10/08/Android-Content-Providers/index.html">
 <meta property="og:site_name" content="Victor Augusto">
-<meta property="og:description" content="Now it is possibleInstall the package atom-like-brackets-editor
+<meta property="og:description" content="O que é um Content Provider
 
-[x] Matching brackets like brackets editor;
-[x] Highlight current line;
-[x] Pointer cursor on tree-view file hover;">
-<meta property="og:image" content="http://i.giphy.com/l2R03kPcara9h9yfK.gif">
-<meta property="og:updated_time" content="2016-03-26T22:28:43.000Z">
+
+Por que usar um Content Provider
+Como Content Providers funcionam
+ContentResolver
+
+
+Uri
+Functions
+Cursor
+
+
+Implementando um Content Provider
+Contract
+
+
+Database Helper">
+<meta property="og:updated_time" content="2016-10-08T09:31:21.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Make atom brackets highlight like Brackets editor">
-<meta name="twitter:description" content="Now it is possibleInstall the package atom-like-brackets-editor
+<meta name="twitter:title" content="Android: Content Providers">
+<meta name="twitter:description" content="O que é um Content Provider
 
-[x] Matching brackets like brackets editor;
-[x] Highlight current line;
-[x] Pointer cursor on tree-view file hover;">
-<meta name="twitter:image" content="http://i.giphy.com/l2R03kPcara9h9yfK.gif">
+
+Por que usar um Content Provider
+Como Content Providers funcionam
+ContentResolver
+
+
+Uri
+Functions
+Cursor
+
+
+Implementando um Content Provider
+Contract
+
+
+Database Helper">
     
 
     
@@ -147,7 +184,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-Make-atom-brackets-highlight-like-Brackets-editor" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-Android-Content-Providers" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -156,7 +193,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            Make atom brackets highlight like Brackets editor
+            Android: Content Providers
         </h1>
     
 
@@ -164,8 +201,8 @@
                     
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2016/03/26/Make-atom-brackets-highlight-like-Brackets-editor/">
-            <time datetime="2016-03-26T22:24:16.000Z" itemprop="datePublished">2016-03-26</time>
+        <a href="/2016/10/08/Android-Content-Providers/">
+            <time datetime="2016-10-08T09:27:58.000Z" itemprop="datePublished">2016-10-08</time>
         </a>
     </div>
 
@@ -174,7 +211,7 @@
                     
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/atom-editor/">atom, editor</a>
+        <a class="tag-link" href="/tags/android/">android</a>
     </div>
 
                 </div>
@@ -183,13 +220,166 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h2 id="Now-it-is-possible"><a href="#Now-it-is-possible" class="headerlink" title="Now it is possible"></a>Now it is possible</h2><p>Install the package <code>atom-like-brackets-editor</code></p>
+            
+<ol>
+<li><a href="#definition">O que é um Content Provider</a></li>
+</ol>
 <ul>
-<li>[x] Matching brackets like brackets editor;</li>
-<li>[x] Highlight current line;</li>
-<li>[x] Pointer cursor on tree-view file hover;</li>
+<li><a href="#why_use">Por que usar um Content Provider</a></li>
+<li><a href="#how_they_work">Como Content Providers funcionam</a><ol>
+<li>ContentResolver</li>
+</ol>
+<ul>
+<li>Uri</li>
+<li>Functions</li>
+<li>Cursor</li>
 </ul>
-<p><img src="http://i.giphy.com/l2R03kPcara9h9yfK.gif" alt="It really works"></p>
+</li>
+<li><a href="#implementing">Implementando um Content Provider</a><ol>
+<li>Contract</li>
+</ol>
+<ul>
+<li>Database Helper</li>
+<li>Provider</li>
+<li>CursorAdapter</li>
+<li>Loader</li>
+</ul>
+</li>
+</ul>
+<hr>
+
+<h2 id="1-O-que-e-um-Content-Provider"><a href="#1-O-que-e-um-Content-Provider" class="headerlink" title=" 1. O que é um Content Provider"></a><a name="definition"></a> 1. O que é um Content Provider</h2><p>Apps normalmente precisam de dados. As vezes <strong>SharedPreferences</strong> vai servir, caso você esteja armazenando poucos dados e que estes sejam bem simples (Como no exepmlo de armazenarmos a unidade em que a temperatura será exibida, Fahrenheit or Celsius). Se você precisa armazenar informações mais complexas, é necessária uma solução mais robusta.</p>
+<p>Uma abordagem um tanto simples é conectar sua aplicação a um banco de dados. O Android oferece suporte para criar um banco de dados <strong>SQLite</strong> na pasta privada do seu aplicativo.</p>
+<p>Uma restrição é que os dados em um database são privados e podem ser acessados somente pelo app que o criou. <strong>ContentProviders</strong> são a solução para esta questão. Este é uma classe localizada entre o app e o <strong>dataSource</strong> (neste caso o banco de dados e as classes que se comunicam diretamente com o database). Ao invés de se comunicar diretamente com o database pra lhe fornecer as 20 últimas rows ou inserir uma nova, por exemplo, você solicita ao <strong>contentProvider</strong> que execute esta tarefa. Então o <strong>contentProvider</strong> interage diretamente com o dataSource. Você pode estar se perguntando o motivo pelo qual você deveria utilizar um <strong>contentProvider</strong> e quais seriam as vantagens de usa-lo.</p>
+<hr>
+
+<h2 id="2-Por-que-usar-um-Content-Provider"><a href="#2-Por-que-usar-um-Content-Provider" class="headerlink" title=" 2. Por que usar um Content Provider"></a><a name="why_use"></a> 2. Por que usar um Content Provider</h2><p>Usamos <strong>contentProviders</strong> para compartilharmos dados de uma forma segura e eficiente entre uma aplicação e um banco de dados. Compartilhar dados de forma segura é bastante importante quando permitimos múltiplas aplicações acessarem o banco de dados da nossa aplicação. O contentProvider também permite que outros apps acessem um banco de dados sem saber como estes estão armazenados. Isto é bastante útil se os dados vêm de mais de uma fonte, ou se decidirmos por mudar a fonte de dados em algum momento.</p>
+<p>Conforme mudamos de uma <strong>AsyncTask</strong> para <strong>SyncAdapters</strong> e <strong>CursorLoaders</strong>, vemos que precisamos de um <strong>ContentProvider</strong> para realizar a comunicação entre eles. Além disso, se quisermos implementar widgets ou buscas no nosso app, precisaremos do <strong>ContentProvider</strong> para fornecer o acesso aos dados. Por enquanto estas necessidades não estão presentes nos apps que estamos desenvolvendo, mas <strong>contentProviders</strong> são uma best practice e o esforço de implementa-los irá valer a pena quando quando o app estiver em produção, e também é importante adquirir experiência com este conceito é bastante válido neste momento inicial.</p>
+<hr>
+
+<h2 id="3-Como-Content-Providers-funcionam"><a href="#3-Como-Content-Providers-funcionam" class="headerlink" title=" 3. Como Content Providers funcionam"></a><a name="how_they_work"></a> 3. Como Content Providers funcionam</h2><h3 id="3-1-Content-Resolver"><a href="#3-1-Content-Resolver" class="headerlink" title="3.1 Content Resolver"></a>3.1 Content Resolver</h3><p>URI significa Uniform Resource Identifier. </p>
+<p>A URI pode identificar e/ou localizar dados. Normalmente eles seguem a seguinte estrutura:<br><code>content://[content_authority]/[desired_data]</code></p>
+<p>Exemplo de uma <strong>URI</strong> usada pra retornar uma lista de palavras do <strong>contentProvider</strong> do dicionário de um usuário:<br><code>content://user_dictionary/words</code></p>
+<h3 id="3-2-Uri"><a href="#3-2-Uri" class="headerlink" title="3.2 Uri"></a>3.2 Uri</h3><p>Um <strong>contentProvider</strong> é um middleman entre a aplicação e o database. </p>
+<p>A aplicação acessa o <strong>contentProvider</strong> para ler ou armazenar dados. Este feito graças ao <strong>ContentResolver</strong>. Há vários ContentProviders nos aparelhos Android (contentProvider do alarme, calendário, e muitos outros). </p>
+<p>A comunicação entre as aplicações e um <strong>contentProvider</strong> é gerenciada por um <strong>ContentResolver</strong>. </p>
+<p>O <strong>ContentResolver</strong> procura por um <strong>ContentProvider</strong> na requisição feita pela sua aplicação, então verifica por qual <strong>ContentProvider</strong> sua aplicação está procurando. Este processamento é feito através de um <strong>URI</strong>;</p>
+<h3 id="3-3-Functions"><a href="#3-3-Functions" class="headerlink" title="3.3 Functions"></a>3.3 Functions</h3><p>Após conseguir acesso ao <strong>ContentResolver</strong>, podemos realizar chamadas no <strong>ContentProvider</strong> (update, delete, query, insert e bulkInsert).</p>
+<table>
+<thead>
+<tr>
+<th>Tipo da função</th>
+<th>Tipo do retorno</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>insert(...)</code></td>
+<td>Uri</td>
+<td>Onde podemos encontrar o dado inserido</td>
+</tr>
+<tr>
+<td><code>bulkInsert(...)</code></td>
+<td>int</td>
+<td>Quantas linhas foram inseridas</td>
+</tr>
+<tr>
+<td><code>update(...)</code></td>
+<td>int</td>
+<td>Quantas linhas foram atualizadas</td>
+</tr>
+<tr>
+<td><code>delete(...)</code></td>
+<td>int</td>
+<td>Quantas linhas foram removidas</td>
+</tr>
+<tr>
+<td><code>query(...)</code></td>
+<td>Cursor</td>
+<td>Nos permite iterar sobre as linhas de dados retornadas</td>
+</tr>
+</tbody>
+</table>
+<p>Antes de avançarmos vamos ver o que acontece quando chamamos estas funções.</p>
+<ul>
+<li><p>Primeiro chamamos o <strong>ContentResolver</strong> para encontrar um ContentProvider. </p>
+</li>
+<li><p>O <strong>ContentResolver</strong> envia a mesma requisição recebida para o <strong>ContentProvider</strong> adequado, que por sua vez retorna o <strong>ContentProvider</strong> para o nosso app.</p>
+</li>
+</ul>
+<p>Uma vez que temos o provider, chamamos nele uma das funções listadas acima. O <strong>ContentResolver</strong> envia a chamada para o <strong>ContentProvider</strong>, que então faz a chamada para o database.</p>
+<p>O database retorna o valor apropriado para o <strong>ContentProvider</strong>, que então passa para o <strong>ContentResolver</strong> e finalmente para a aplicação.</p>
+<h3 id="3-4-Cursor"><a href="#3-4-Cursor" class="headerlink" title="3.4 Cursor"></a>3.4 Cursor</h3><p>Um <strong>Cursor</strong> é um iterator. Isso nos dá acesso aos dados de forma tabular. </p>
+<p>As operações que podemos executar no nosso cursor incluem: </p>
+<ul>
+<li>Acessar colunas dos dados retornados;</li>
+<li>A quantidade de linhas retornadas;</li>
+<li>Iterar sobre o cursor;</li>
+<li>E mais…</li>
+</ul>
+<p>Há muitas operações que podem ser executadas sobre um cursor, e elas podem ser verificadas na documentação do Android.</p>
+<table>
+<thead>
+<tr>
+<th>_ID</th>
+<th>version_name</th>
+<th>description</th>
+<th>icon</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Cupcake</td>
+<td>cupcake is the first android release</td>
+<td>2130837563</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Donut</td>
+<td>Donut description</td>
+<td>2130837564</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Eclair</td>
+<td>Eclair description</td>
+<td>2130837565</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Froyo</td>
+<td>Froyo description</td>
+<td>2130837566</td>
+</tr>
+<tr>
+<td>5</td>
+<td>GingerBread</td>
+<td>GingerBread description</td>
+<td>2130837567</td>
+</tr>
+</tbody>
+</table>
+<hr>
+
+
+<h2 id="4-Implementando-um-Content-Provider"><a href="#4-Implementando-um-Content-Provider" class="headerlink" title=" 4. Implementando um Content Provider"></a><a name="implementing"></a> 4. Implementando um Content Provider</h2><h3 id="4-1-Contract"><a href="#4-1-Contract" class="headerlink" title="4.1 Contract"></a>4.1 Contract</h3><p>Para implementar nosso <strong>contentProvider</strong> precisamos começar criando um <strong>Contract</strong>. Nele nós declaramos o <strong>contentAuthority</strong> e o <strong>baseURI</strong> para o banco de dados.</p>
+<p>Nele também definimos o nome da tabela e as respectivas colunas.</p>
+<p>Por fim declaramos o <strong>URI</strong> especificando a localização da tabela, assim como as <strong>URIs</strong> para acessar o diretório de dados <code>CURSOR_DIR_BASE_TYPE</code> (0 ou muitas linhas) e única linha <code>CURSOR_ITEM_BASE_TYPE</code>.</p>
+<h3 id="4-2-Database-Helper"><a href="#4-2-Database-Helper" class="headerlink" title="4.2 Database Helper"></a>4.2 Database Helper</h3><p>Aqui é onde de fato criamos uma tabela no banco de dados. E também mantemos o número da versão atual do nosso banco.</p>
+<p>Saber a versão do nosso banco de dados ajuda a gerencia-lo, uma vez que precisamos atualiza-lo quando houver alguma alteração.</p>
+<h3 id="4-3-Provider"><a href="#4-3-Provider" class="headerlink" title="4.3 Provider"></a>4.3 Provider</h3><p>Agora é a hora do <strong>provider</strong> de fato. A classe do <strong>provider</strong> deve estender de <code>ContentProvider</code>.</p>
+<p>Implementar esta classe requer um <code>@override</code> das funções do <code>ContentProvider</code> que discutimos anteriormente. Além disso também iremos fazer <code>@override</code> na função <code>getType()</code>, que nos permite saber o tipo do conteúdo (<code>DIR</code> ou <code>ITEM</code>) baseado no <strong>URI</strong>.</p>
+<p>Também temos que implementar um método que cria a <code>UriMatcher</code>, que nos permite determinar que tipo de requisição está sendo feita, baseado no <strong>URI</strong> enviado ao <strong>contentProvider</strong>. Ao usar o <code>matcher</code> podemos fazer as chamadas apropriadas ao database.</p>
+<h3 id="4-4-Cursor-Adapter"><a href="#4-4-Cursor-Adapter" class="headerlink" title="4.4 Cursor Adapter"></a>4.4 Cursor Adapter</h3><p>No caso desta aplicação, queremos mostrar os dados do <strong>contentProvider</strong> em um <code>GridView</code> e aplicar um <code>loader</code> a ele. Isso significa que precisamos de um <strong>CursorAdapter</strong>, uma vez que nosso <code>provider</code> retorna um <code>Cursor</code> quando selecionamos dados no banco.</p>
+<p>Estender do <code>CursorAdapter</code> requer um <code>@override</code> nos métodos:</p>
+<ul>
+<li><code>newView()</code> - Chamado quando definimos o cursor para o adapter, que irá criar a view que iremos exibir os dados.</li>
+<li><code>bindView()</code> - Chamada para cada linha do cursor para continuar a atualizar a view (item) a ser exibida.</li>
+</ul>
+<h3 id="4-5-Loader"><a href="#4-5-Loader" class="headerlink" title="4.5 Loader"></a>4.5 Loader</h3><p>Por fim, se quisermos que o <code>loader</code> seja exibido, devemos implementar o <code>LoaderManager</code> e anexa-lo ao <code>Cursor</code>.</p>
+<p>Assim teremos o <code>loader</code> em execução até que os dados sejam retornados para o <code>cursor</code> e estejam prontos para serem exibidos.</p>
 
         
         </div>
@@ -200,7 +390,7 @@
 
 </div>
 
-    <a data-url="http://augustovictor.com/2016/03/26/Make-atom-brackets-highlight-like-Brackets-editor/" data-id="ciu104m9e0005wfyot8tgqdks" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://augustovictor.com/2016/10/08/Android-Content-Providers/" data-id="ciu104m8v0000wfyopplp25jr" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -268,7 +458,7 @@
 
             
     
-        <a href="http://augustovictor.com/2016/03/26/Make-atom-brackets-highlight-like-Brackets-editor/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://augustovictor.com/2016/03/26/Make-atom-brackets-highlight-like-Brackets-editor/">Comments</a>
+        <a href="http://augustovictor.com/2016/10/08/Android-Content-Providers/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://augustovictor.com/2016/10/08/Android-Content-Providers/">Comments</a>
     
 
         </footer>
@@ -277,19 +467,10 @@
         
 <nav id="article-nav">
     
-        <a href="/2016/09/30/Junit-Guide/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">Newer</strong>
-            <div class="article-nav-title">
-                
-                    Junit Guide for beginners (pt - br)
-                
-            </div>
-        </a>
     
-    
-        <a href="/2016/03/19/Create-and-deploy-posts-in-Hexo/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2016/09/30/Junit-Guide/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">Older</strong>
-            <div class="article-nav-title">Create and deploy posts in Hexo</div>
+            <div class="article-nav-title">Junit Guide for beginners (pt - br)</div>
         </a>
     
 </nav>
@@ -444,7 +625,7 @@
     var disqus_shortname = 'hexo-theme-icarus';
     
     
-    var disqus_url = 'http://augustovictor.com/2016/03/26/Make-atom-brackets-highlight-like-Brackets-editor/';
+    var disqus_url = 'http://augustovictor.com/2016/10/08/Android-Content-Providers/';
     
     (function() {
     var dsq = document.createElement('script');
