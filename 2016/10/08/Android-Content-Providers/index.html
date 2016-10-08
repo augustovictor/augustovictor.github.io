@@ -45,7 +45,8 @@ Contract
 
 
 Database Helper">
-<meta property="og:updated_time" content="2016-10-08T09:31:21.000Z">
+<meta property="og:image" content="http://augustovictor.com/../android-content-providers.jpg">
+<meta property="og:updated_time" content="2016-10-08T09:33:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android: Content Providers">
 <meta name="twitter:description" content="O que é um Content Provider
@@ -66,6 +67,7 @@ Contract
 
 
 Database Helper">
+<meta name="twitter:image" content="http://augustovictor.com/../android-content-providers.jpg">
     
 
     
@@ -220,7 +222,7 @@ Database Helper">
         <div class="article-entry" itemprop="articleBody">
         
             
-            
+            <p><img src="../android-content-providers.jpg" alt="a"></p>
 <ol>
 <li><a href="#definition">O que é um Content Provider</a></li>
 </ol>
@@ -257,12 +259,12 @@ Database Helper">
 <p>Conforme mudamos de uma <strong>AsyncTask</strong> para <strong>SyncAdapters</strong> e <strong>CursorLoaders</strong>, vemos que precisamos de um <strong>ContentProvider</strong> para realizar a comunicação entre eles. Além disso, se quisermos implementar widgets ou buscas no nosso app, precisaremos do <strong>ContentProvider</strong> para fornecer o acesso aos dados. Por enquanto estas necessidades não estão presentes nos apps que estamos desenvolvendo, mas <strong>contentProviders</strong> são uma best practice e o esforço de implementa-los irá valer a pena quando quando o app estiver em produção, e também é importante adquirir experiência com este conceito é bastante válido neste momento inicial.</p>
 <hr>
 
-<h2 id="3-Como-Content-Providers-funcionam"><a href="#3-Como-Content-Providers-funcionam" class="headerlink" title=" 3. Como Content Providers funcionam"></a><a name="how_they_work"></a> 3. Como Content Providers funcionam</h2><h3 id="3-1-Content-Resolver"><a href="#3-1-Content-Resolver" class="headerlink" title="3.1 Content Resolver"></a>3.1 Content Resolver</h3><p>URI significa Uniform Resource Identifier. </p>
+<h2 id="3-Como-Content-Providers-funcionam"><a href="#3-Como-Content-Providers-funcionam" class="headerlink" title=" 3. Como Content Providers funcionam"></a><a name="how_they_work"></a> 3. Como Content Providers funcionam</h2><h3 id="3-1-Content-Resolver"><a href="#3-1-Content-Resolver" class="headerlink" title="3.1 Content Resolver"></a>3.1 Content Resolver</h3><p>URI significa Uniform Resource Identifier.</p>
 <p>A URI pode identificar e/ou localizar dados. Normalmente eles seguem a seguinte estrutura:<br><code>content://[content_authority]/[desired_data]</code></p>
 <p>Exemplo de uma <strong>URI</strong> usada pra retornar uma lista de palavras do <strong>contentProvider</strong> do dicionário de um usuário:<br><code>content://user_dictionary/words</code></p>
-<h3 id="3-2-Uri"><a href="#3-2-Uri" class="headerlink" title="3.2 Uri"></a>3.2 Uri</h3><p>Um <strong>contentProvider</strong> é um middleman entre a aplicação e o database. </p>
-<p>A aplicação acessa o <strong>contentProvider</strong> para ler ou armazenar dados. Este feito graças ao <strong>ContentResolver</strong>. Há vários ContentProviders nos aparelhos Android (contentProvider do alarme, calendário, e muitos outros). </p>
-<p>A comunicação entre as aplicações e um <strong>contentProvider</strong> é gerenciada por um <strong>ContentResolver</strong>. </p>
+<h3 id="3-2-Uri"><a href="#3-2-Uri" class="headerlink" title="3.2 Uri"></a>3.2 Uri</h3><p>Um <strong>contentProvider</strong> é um middleman entre a aplicação e o database.</p>
+<p>A aplicação acessa o <strong>contentProvider</strong> para ler ou armazenar dados. Este feito graças ao <strong>ContentResolver</strong>. Há vários ContentProviders nos aparelhos Android (contentProvider do alarme, calendário, e muitos outros).</p>
+<p>A comunicação entre as aplicações e um <strong>contentProvider</strong> é gerenciada por um <strong>ContentResolver</strong>.</p>
 <p>O <strong>ContentResolver</strong> procura por um <strong>ContentProvider</strong> na requisição feita pela sua aplicação, então verifica por qual <strong>ContentProvider</strong> sua aplicação está procurando. Este processamento é feito através de um <strong>URI</strong>;</p>
 <h3 id="3-3-Functions"><a href="#3-3-Functions" class="headerlink" title="3.3 Functions"></a>3.3 Functions</h3><p>Após conseguir acesso ao <strong>ContentResolver</strong>, podemos realizar chamadas no <strong>ContentProvider</strong> (update, delete, query, insert e bulkInsert).</p>
 <table>
@@ -303,15 +305,15 @@ Database Helper">
 </table>
 <p>Antes de avançarmos vamos ver o que acontece quando chamamos estas funções.</p>
 <ul>
-<li><p>Primeiro chamamos o <strong>ContentResolver</strong> para encontrar um ContentProvider. </p>
+<li><p>Primeiro chamamos o <strong>ContentResolver</strong> para encontrar um ContentProvider.</p>
 </li>
 <li><p>O <strong>ContentResolver</strong> envia a mesma requisição recebida para o <strong>ContentProvider</strong> adequado, que por sua vez retorna o <strong>ContentProvider</strong> para o nosso app.</p>
 </li>
 </ul>
 <p>Uma vez que temos o provider, chamamos nele uma das funções listadas acima. O <strong>ContentResolver</strong> envia a chamada para o <strong>ContentProvider</strong>, que então faz a chamada para o database.</p>
 <p>O database retorna o valor apropriado para o <strong>ContentProvider</strong>, que então passa para o <strong>ContentResolver</strong> e finalmente para a aplicação.</p>
-<h3 id="3-4-Cursor"><a href="#3-4-Cursor" class="headerlink" title="3.4 Cursor"></a>3.4 Cursor</h3><p>Um <strong>Cursor</strong> é um iterator. Isso nos dá acesso aos dados de forma tabular. </p>
-<p>As operações que podemos executar no nosso cursor incluem: </p>
+<h3 id="3-4-Cursor"><a href="#3-4-Cursor" class="headerlink" title="3.4 Cursor"></a>3.4 Cursor</h3><p>Um <strong>Cursor</strong> é um iterator. Isso nos dá acesso aos dados de forma tabular.</p>
+<p>As operações que podemos executar no nosso cursor incluem:</p>
 <ul>
 <li>Acessar colunas dos dados retornados;</li>
 <li>A quantidade de linhas retornadas;</li>
@@ -390,7 +392,7 @@ Database Helper">
 
 </div>
 
-    <a data-url="http://augustovictor.com/2016/10/08/Android-Content-Providers/" data-id="ciu104m8v0000wfyopplp25jr" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://augustovictor.com/2016/10/08/Android-Content-Providers/" data-id="ciu1074iv0000xvyopz8htty3" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -507,7 +509,7 @@ Database Helper">
                             <a href="/2016/10/08/Android-Content-Providers/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(/../android-content-providers.jpg)" alt="Android: Content Providers" class="thumbnail-image"></span>
     
 </a>
                         </div>
